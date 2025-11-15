@@ -1,0 +1,8 @@
+Dear {!$Record.CreatedBy.Name},
+
+Your service request with ID {!$Record.Id} has been successfully created.
+
+We will get back to you shortly.
+
+Regards,
+Institutional Service Management Team

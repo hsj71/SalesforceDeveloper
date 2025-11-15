@@ -1,0 +1,30 @@
+public class UserCreation {
+    public static void createNewUser(String firstName, String lastName, String email, String role, String profileId) {
+        try {
+            User newUser = new User();
+            newUser.FirstName = firstName;
+            newUser.LastName = lastName;
+            newUser.Email = email;
+            newUser.Username = email;
+            newUser.Alias = firstName.substring(0, 1) + lastName.substring(0, 4);
+            newUser.CommunityNickname = firstName + lastName;
+            newUser.TimeZoneSidKey = 'America/New_York';
+            newUser.LocaleSidKey = 'en_US';
+            newUser.EmailEncodingKey = 'UTF-8';
+            newUser.ProfileId = profileId;
+            newUser.LanguageLocaleKey = 'en_US';
+            
+            // Assign role based on input
+            Group roleGroup = [SELECT Id FROM Group WHERE Name = :role LIMIT 1];
+            newUser.UserRoleId = roleGroup.Id;
+
+            // Assign license
+            newUser.UserLicenseId = [SELECT Id FROM UserLicense WHERE Name = 'Salesforce'].Id;
+
+            insert newUser;
+            
+        } catch (Exception e) {
+            System.debug('Error in creating user: ' + e.getMessage());
+        }
+    }
+}

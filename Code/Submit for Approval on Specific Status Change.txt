@@ -1,0 +1,8 @@
+trigger SubmitRequestForApproval on Service_Request__c (after update) {
+    for(Service_Request__c request : Trigger.New) {
+        // Check if the status has changed to 'Pending Approval'
+        if(request.Status__c == 'Pending Approval' && Trigger.oldMap.get(request.Id).Status__c != 'Pending Approval') {
+            ServiceRequestApproval.submitForApproval(request.Id);
+        }
+    }
+}
